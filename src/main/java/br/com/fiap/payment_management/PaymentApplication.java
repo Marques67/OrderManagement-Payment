@@ -1,4 +1,4 @@
-package br.com.order_management.payment;
+package br.com.fiap.payment_management;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
