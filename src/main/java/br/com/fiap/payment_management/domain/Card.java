@@ -8,6 +8,8 @@ import java.util.Objects;
 
 public class Card {
 
+    private Long id;
+
     private String number;
 
     private Integer cvv;
@@ -17,6 +19,22 @@ public class Card {
     private String expirationDate;
 
     private CardType cardType;
+
+    public Card(Long id, String number, Integer cvv, String nameOnCard, String expirationDate, CardType cardType) {
+        validateCardId(id);
+        validateNumber(number);
+        validateCvv(cvv);
+        validateNameOnCard(nameOnCard);
+        validateExpirationDate(expirationDate);
+        validateCardType(cardType);
+
+        this.id = id;
+        this.number = number;
+        this.cvv = cvv;
+        this.nameOnCard = nameOnCard;
+        this.expirationDate = expirationDate;
+        this.cardType = cardType;
+    }
 
     public Card(String number, Integer cvv, String nameOnCard, String expirationDate, CardType cardType) {
         validateNumber(number);
@@ -30,6 +48,12 @@ public class Card {
         this.nameOnCard = nameOnCard;
         this.expirationDate = expirationDate;
         this.cardType = cardType;
+    }
+
+    private void validateCardId(Long id) {
+        if (id == null || id <= 0) {
+            throw new IllegalArgumentException("Id is required");
+        }
     }
 
     private void validateNumber(String number) {
@@ -67,6 +91,14 @@ public class Card {
         if (cardType == null) {
             throw new IllegalArgumentException("Card type is required");
         }
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getNumber() {

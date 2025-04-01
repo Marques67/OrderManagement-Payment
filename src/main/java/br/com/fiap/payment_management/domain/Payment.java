@@ -1,5 +1,7 @@
 package br.com.fiap.payment_management.domain;
 
+import br.com.fiap.payment_management.enums.PaymentType;
+
 import java.util.Objects;
 
 public class Payment {
@@ -7,15 +9,28 @@ public class Payment {
     private Long id;
     private Card card;
     private Double orderValue;
+    private PaymentType paymentType;
 
-    public Payment(Long id, Card card, Double orderValue) {
+    public Payment(Long id, Card card, Double orderValue, PaymentType paymentType) {
         validatePaymentId(id);
         validatePaymentCard(card);
         validatePaymentValue(orderValue);
+        validatePaymentType(paymentType);
 
         this.id = id;
         this.card = card;
         this.orderValue = orderValue;
+        this.paymentType = paymentType;
+    }
+
+    public Payment(Card card, Double orderValue, PaymentType paymentType) {
+        validatePaymentCard(card);
+        validatePaymentValue(orderValue);
+        validatePaymentType(paymentType);
+
+        this.card = card;
+        this.orderValue = orderValue;
+        this.paymentType = paymentType;
     }
 
     private void validatePaymentId(Long id) {
@@ -33,6 +48,12 @@ public class Payment {
     private void validatePaymentValue(Double orderValue) {
         if (orderValue == null) {
             throw new IllegalArgumentException("Order value is required");
+        }
+    }
+
+    private void validatePaymentType(PaymentType paymentType) {
+        if (paymentType == null) {
+            throw new IllegalArgumentException("Payment Type is required");
         }
     }
 
@@ -60,6 +81,14 @@ public class Payment {
         this.orderValue = orderValue;
     }
 
+    public PaymentType getPaymentType() {
+        return paymentType;
+    }
+
+    public void setPaymentType(PaymentType paymentType) {
+        this.paymentType = paymentType;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -67,11 +96,12 @@ public class Payment {
         Payment payment = (Payment) o;
         return Objects.equals(id, payment.id)
                 && Objects.equals(card, payment.card)
-                && Objects.equals(orderValue, payment.orderValue);
+                && Objects.equals(orderValue, payment.orderValue)
+                && paymentType == payment.paymentType;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, card, orderValue);
+        return Objects.hash(id, card, orderValue, paymentType);
     }
 }
