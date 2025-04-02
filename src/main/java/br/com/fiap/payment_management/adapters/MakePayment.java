@@ -10,4 +10,8 @@ public class MakePayment implements MakePaymentProducer {
     public String makePayment(Card card, Double orderValue, PaymentType paymentType) {
         return UUID.randomUUID().toString();
     }
+
+    public String makePayment(Double orderValue, PaymentType paymentType) {
+        return UUID.randomUUID().toString();
+    }
 }

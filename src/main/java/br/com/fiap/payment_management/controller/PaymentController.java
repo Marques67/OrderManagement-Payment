@@ -4,23 +4,40 @@ import br.com.fiap.payment_management.controller.dto.CardDTO;
 import br.com.fiap.payment_management.controller.dto.PaymentDTO;
 import br.com.fiap.payment_management.domain.Card;
 import br.com.fiap.payment_management.domain.Payment;
+import br.com.fiap.payment_management.gateway.database.jpa.PaymentJpaGateway;
 import br.com.fiap.payment_management.usecase.PaymentUseCase;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("/payment")
 public class PaymentController {
 
+    private final PaymentJpaGateway paymentJpaGateway;
+
+    private final PaymentUseCase paymentUseCase;
+
+    public PaymentController(PaymentJpaGateway paymentJpaGateway, PaymentUseCase paymentUseCase) {
+        this.paymentJpaGateway = paymentJpaGateway;
+        this.paymentUseCase = paymentUseCase;
+    }
+
     @PostMapping("/makePayment")
-    public PaymentDTO makePayment(PaymentDTO paymentDTO) {
-        CardDTO cardDTO = paymentDTO.cardDTO();
-        Card card = new Card(cardDTO.number(), cardDTO.cvv(), cardDTO.nameOnCard(), cardDTO.expirationDate(), cardDTO.cardType());
+    public PaymentDTO makePayment(@RequestBody PaymentDTO paymentDTO) {
+        CardDTO cardDTO = paymentDTO.card();
 
-        Payment payment = PaymentUseCase.makePayment(card, paymentDTO.orderValue(), paymentDTO.paymentType());
+        Payment payment = paymentUseCase.makePayment(null, paymentDTO.orderValue(), paymentDTO.paymentType());
 
-        return new PaymentDTO(payment);
+        if (cardDTO != null) {
+            Card card = new Card(cardDTO.number(), cardDTO.cvv(), cardDTO.nameOnCard(), cardDTO.expirationDate(), cardDTO.cardType());
+            payment = paymentUseCase.makePayment(card, paymentDTO.orderValue(), paymentDTO.paymentType());
+        }
+
+        return new PaymentDTO(paymentJpaGateway.createPayment(payment));
+    }
+
+    @GetMapping("/{id}")
+    public PaymentDTO findById(@PathVariable("id") Long id) {
+        return new PaymentDTO(paymentJpaGateway.findById(id));
     }
 
 }

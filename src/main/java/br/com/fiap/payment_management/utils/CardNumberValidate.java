@@ -6,11 +6,11 @@ import java.util.regex.Pattern;
 public class CardNumberValidate {
 
     public static boolean isAValidCardNumber(String cardNumber) {
-        String regex = "^\\d{4} \\d{4} \\d{4} \\d{4}$";
-        Pattern pattern = Pattern.compile(regex);
-        Matcher matcher = pattern.matcher(cardNumber);
+        String cardFormat = "^\\d{4}[- ]\\d{4}[- ]\\d{4}[- ]\\d{4}$";
+        Pattern cardPattern = Pattern.compile(cardFormat);
+        Matcher cardMatcher = cardPattern.matcher(cardNumber);
 
-        if (matcher.matches()) {
+        if (cardMatcher.matches()) {
             String completedNumber = cardNumber.replaceAll("[ -]", "");
 
             return completedNumber.length() == 16;

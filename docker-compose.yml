@@ -1,7 +1,7 @@
 version: '3.8'
 
 services:
-  client-db:
+  payment-db:
     image: postgres:latest
     container_name: payment-db
     environment:

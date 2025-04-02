@@ -45,12 +45,17 @@ public class PaymentEntity {
 
         this.orderValue = payment.getOrderValue();
         this.paymentType = payment.getPaymentType();
-        this.id = card.getId();
-        this.number = card.getNumber();
-        this.cvv = card.getCvv();
-        this.nameOnCard = card.getNameOnCard();
-        this.expirationDate = card.getExpirationDate();
-        this.cardType = card.getCardType();
+
+        if (card != null) {
+            this.id = card.getId();
+            this.number = card.getNumber();
+            this.cvv = card.getCvv();
+            this.nameOnCard = card.getNameOnCard();
+            this.expirationDate = card.getExpirationDate();
+            this.cardType = card.getCardType();
+        }
+
+        this.paymentRequestId = payment.getPaymentRequestId();
     }
 
     public Long getId() {
@@ -123,5 +128,14 @@ public class PaymentEntity {
 
     public void setPaymentRequestId(String paymentRequestId) {
         this.paymentRequestId = paymentRequestId;
+    }
+
+    public Payment toDomain() {
+        if (paymentType.equals(PaymentType.CARD)) {
+            Card card = new Card(number, cvv, nameOnCard, expirationDate, cardType);
+            return new Payment(id, card, orderValue, paymentType, paymentRequestId);
+        } else {
+            return new Payment(id, null, orderValue, paymentType, paymentRequestId);
+        }
     }
 }

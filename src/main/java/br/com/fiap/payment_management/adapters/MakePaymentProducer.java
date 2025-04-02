@@ -6,4 +6,5 @@ import br.com.fiap.payment_management.enums.PaymentType;
 public interface MakePaymentProducer {
 
     String makePayment(Card card, Double orderValue, PaymentType paymentType);
+
 }

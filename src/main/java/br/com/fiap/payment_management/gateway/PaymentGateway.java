@@ -5,9 +5,5 @@ public interface PaymentGateway {
 
     Payment findById(Long id);
 
-    Payment create(Payment payment);
-
-    Payment update(Payment payment);
-
-    void delete(Payment payment);
+    Payment createPayment(Payment payment);
 }
