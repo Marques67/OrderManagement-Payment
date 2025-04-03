@@ -1,6 +1,5 @@
 package br.com.fiap.payment_management.domain;
 
-import br.com.fiap.payment_management.enums.CardType;
 import br.com.fiap.payment_management.utils.CardDateValidate;
 import br.com.fiap.payment_management.utils.CardNumberValidate;
 
@@ -18,36 +17,30 @@ public class Card {
 
     private String expirationDate;
 
-    private CardType cardType;
-
-    public Card(Long id, String number, Integer cvv, String nameOnCard, String expirationDate, CardType cardType) {
+    public Card(Long id, String number, Integer cvv, String nameOnCard, String expirationDate) {
         validateCardId(id);
         validateNumber(number);
         validateCvv(cvv);
         validateNameOnCard(nameOnCard);
         validateExpirationDate(expirationDate);
-        validateCardType(cardType);
 
         this.id = id;
         this.number = number;
         this.cvv = cvv;
         this.nameOnCard = nameOnCard;
         this.expirationDate = expirationDate;
-        this.cardType = cardType;
     }
 
-    public Card(String number, Integer cvv, String nameOnCard, String expirationDate, CardType cardType) {
+    public Card(String number, Integer cvv, String nameOnCard, String expirationDate) {
         validateNumber(number);
         validateCvv(cvv);
         validateNameOnCard(nameOnCard);
         validateExpirationDate(expirationDate);
-        validateCardType(cardType);
 
         this.number = number;
         this.cvv = cvv;
         this.nameOnCard = nameOnCard;
         this.expirationDate = expirationDate;
-        this.cardType = cardType;
     }
 
     private void validateCardId(Long id) {
@@ -84,12 +77,6 @@ public class Card {
             throw new IllegalArgumentException("Expiration date is required");
         } else if (!CardDateValidate.isAValidCardDate(expirationDate)) {
             throw new IllegalArgumentException("Invalid expiration date");
-        }
-    }
-
-    private void validateCardType(CardType cardType) {
-        if (cardType == null) {
-            throw new IllegalArgumentException("Card type is required");
         }
     }
 
@@ -133,14 +120,6 @@ public class Card {
         this.expirationDate = expirationDate;
     }
 
-    public CardType getCardType() {
-        return cardType;
-    }
-
-    public void setCardType(CardType cardType) {
-        this.cardType = cardType;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -149,12 +128,11 @@ public class Card {
         return Objects.equals(number, card.number)
                 && Objects.equals(cvv, card.cvv)
                 && Objects.equals(nameOnCard, card.nameOnCard)
-                && Objects.equals(expirationDate, card.expirationDate)
-                && cardType == card.cardType;
+                && Objects.equals(expirationDate, card.expirationDate);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(number, cvv, nameOnCard, expirationDate, cardType);
+        return Objects.hash(number, cvv, nameOnCard, expirationDate);
     }
 }

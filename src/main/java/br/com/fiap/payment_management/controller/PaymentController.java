@@ -25,12 +25,8 @@ public class PaymentController {
     public PaymentDTO makePayment(@RequestBody PaymentDTO paymentDTO) {
         CardDTO cardDTO = paymentDTO.card();
 
-        Payment payment = paymentUseCase.makePayment(null, paymentDTO.orderValue(), paymentDTO.paymentType());
-
-        if (cardDTO != null) {
-            Card card = new Card(cardDTO.number(), cardDTO.cvv(), cardDTO.nameOnCard(), cardDTO.expirationDate(), cardDTO.cardType());
-            payment = paymentUseCase.makePayment(card, paymentDTO.orderValue(), paymentDTO.paymentType());
-        }
+        Card card = new Card(cardDTO.number(), cardDTO.cvv(), cardDTO.nameOnCard(), cardDTO.expirationDate());
+        Payment payment = paymentUseCase.makePayment(card, paymentDTO.orderValue());
 
         return new PaymentDTO(paymentJpaGateway.createPayment(payment));
     }
