@@ -31,6 +31,17 @@ public class PaymentEntity {
     public PaymentEntity() {
     }
 
+    public PaymentEntity(Long id, Double orderValue, String number, Integer cvv, String nameOnCard,
+                         String expirationDate, String paymentRequestId) {
+        this.id = id;
+        this.orderValue = orderValue;
+        this.number = number;
+        this.cvv = cvv;
+        this.nameOnCard = nameOnCard;
+        this.expirationDate = expirationDate;
+        this.paymentRequestId = paymentRequestId;
+    }
+
     public PaymentEntity(Payment payment) {
         Card card = payment.getCard();
 

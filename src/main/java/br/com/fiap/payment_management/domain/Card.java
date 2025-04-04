@@ -1,6 +1,6 @@
 package br.com.fiap.payment_management.domain;
 
-import br.com.fiap.payment_management.utils.CardDateValidate;
+import br.com.fiap.payment_management.utils.ExpirationDateValidate;
 import br.com.fiap.payment_management.utils.CardNumberValidate;
 
 import java.util.Objects;
@@ -50,7 +50,7 @@ public class Card {
     }
 
     private void validateNumber(String number) {
-        if (number == null || number.isBlank() || number.isEmpty()) {
+        if (number == null || number.isEmpty()) {
             throw new IllegalArgumentException("Number is required");
         } else if (!CardNumberValidate.isAValidCardNumber(number)) {
             throw new IllegalArgumentException("Invalid card number");
@@ -75,7 +75,7 @@ public class Card {
     private void validateExpirationDate(String expirationDate) {
         if (expirationDate == null || expirationDate.isEmpty()) {
             throw new IllegalArgumentException("Expiration date is required");
-        } else if (!CardDateValidate.isAValidCardDate(expirationDate)) {
+        } else if (!ExpirationDateValidate.isAValidExpirationDate(expirationDate)) {
             throw new IllegalArgumentException("Invalid expiration date");
         }
     }
