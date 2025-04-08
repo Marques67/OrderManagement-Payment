@@ -10,6 +10,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
+import java.util.Optional;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
@@ -64,5 +66,36 @@ public class PaymentJpaGatewayTest {
 
         assertThrows(IllegalArgumentException.class,
                 () -> paymentJpaGateway.createPayment(payment), "Payment already exists");
+    }
+
+    @Test
+    public void shouldFindPaymentByIdWithSuccess() {
+        Payment payment = new Payment(this.card, this.orderValue, this.paymentRequestId);
+
+        PaymentEntity paymentEntity = new PaymentEntity(payment);
+        paymentEntity.setId(1L);
+
+        when(paymentRepository.findById(any())).thenReturn(Optional.of(paymentEntity));
+
+        Payment result = paymentJpaGateway.findById(1L);
+
+        assertEquals(paymentEntity.getId(), result.getId());
+        assertEquals(paymentEntity.getOrderValue(), result.getOrderValue());
+        assertEquals(paymentEntity.getPaymentRequestId(), result.getPaymentRequestId());
+        assertEquals(paymentEntity.getNumber(), result.getCard().getNumber());
+        assertEquals(paymentEntity.getCvv(), result.getCard().getCvv());
+        assertEquals(paymentEntity.getExpirationDate(), result.getCard().getExpirationDate());
+        assertEquals(paymentEntity.getNameOnCard(), result.getCard().getNameOnCard());
+
+
+    }
+
+    @Test
+    public void shouldThrowExceptionWhenPaymentEntityIsEmpty() {
+
+        when(paymentRepository.findById(any())).thenReturn(Optional.empty());
+
+        assertThrows(IllegalArgumentException.class,
+                () -> paymentJpaGateway.findById(1L), "Payment not found");
     }
 }

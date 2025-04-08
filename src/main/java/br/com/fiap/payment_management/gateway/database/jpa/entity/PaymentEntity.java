@@ -66,48 +66,24 @@ public class PaymentEntity {
         return orderValue;
     }
 
-    public void setOrderValue(Double orderValue) {
-        this.orderValue = orderValue;
-    }
-
     public String getNumber() {
         return number;
-    }
-
-    public void setNumber(String number) {
-        this.number = number;
     }
 
     public Integer getCvv() {
         return cvv;
     }
 
-    public void setCvv(Integer cvv) {
-        this.cvv = cvv;
-    }
-
     public String getNameOnCard() {
         return nameOnCard;
-    }
-
-    public void setNameOnCard(String nameOnCard) {
-        this.nameOnCard = nameOnCard;
     }
 
     public String getExpirationDate() {
         return expirationDate;
     }
 
-    public void setExpirationDate(String expirationDate) {
-        this.expirationDate = expirationDate;
-    }
-
     public String getPaymentRequestId() {
         return paymentRequestId;
-    }
-
-    public void setPaymentRequestId(String paymentRequestId) {
-        this.paymentRequestId = paymentRequestId;
     }
 
     public Payment toDomain() {

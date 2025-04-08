@@ -21,10 +21,28 @@ public class PaymentTest {
     }
 
     @Test
+    void throwsExceptionWhenPaymentIdIsNull() {
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> new Payment(null, this.card, this.orderValue, this.paymentRequestId),
+                "Id is required"
+        );
+    }
+
+    @Test
+    void throwsExceptionWhenPaymentIDIsLessThanZero() {
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> new Payment(-1L, this.card, this.orderValue, this.paymentRequestId),
+                "Id is required"
+        );
+    }
+
+    @Test
     void throwsExceptionWhenOrderValueIsNull() {
         assertThrows(
                 IllegalArgumentException.class,
-                () -> new Payment(this.card, null, this.paymentRequestId),
+                () -> new Payment(null, this.paymentRequestId),
                 "Order value is required"
         );
     }
@@ -33,7 +51,7 @@ public class PaymentTest {
     void throwsExceptionWhenPaymentRequestIdIsNull() {
         assertThrows(
                 IllegalArgumentException.class,
-                () -> new Payment(this.card, this.orderValue, null),
+                () -> new Payment(this.orderValue, null),
                 "Payment Request id is required"
         );
     }

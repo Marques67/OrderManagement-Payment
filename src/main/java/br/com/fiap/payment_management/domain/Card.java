@@ -59,7 +59,7 @@ public class Card {
 
     private void validateCvv(Integer cvv) {
         String cvvString = String.valueOf(cvv);
-        if (cvvString == null) {
+        if (cvv == null) {
             throw new IllegalArgumentException("Cvv is required");
         } else if (cvvString.length() != 3) {
             throw new IllegalArgumentException("Cvv is invalid");
@@ -84,55 +84,20 @@ public class Card {
         return id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     public String getNumber() {
         return number;
-    }
-
-    public void setNumber(String number) {
-        this.number = number;
     }
 
     public Integer getCvv() {
         return cvv;
     }
 
-    public void setCvv(Integer cvv) {
-        this.cvv = cvv;
-    }
-
     public String getNameOnCard() {
         return nameOnCard;
-    }
-
-    public void setNameOnCard(String nameOnCard) {
-        this.nameOnCard = nameOnCard;
     }
 
     public String getExpirationDate() {
         return expirationDate;
     }
 
-    public void setExpirationDate(String expirationDate) {
-        this.expirationDate = expirationDate;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Card card = (Card) o;
-        return Objects.equals(number, card.number)
-                && Objects.equals(cvv, card.cvv)
-                && Objects.equals(nameOnCard, card.nameOnCard)
-                && Objects.equals(expirationDate, card.expirationDate);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(number, cvv, nameOnCard, expirationDate);
-    }
 }

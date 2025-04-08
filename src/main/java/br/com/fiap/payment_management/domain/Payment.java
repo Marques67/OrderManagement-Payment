@@ -67,47 +67,15 @@ public class Payment {
         return id;
     }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     public Card getCard() {
         return card;
-    }
-
-    public void setCard(Card card) {
-        this.card = card;
     }
 
     public Double getOrderValue() {
         return orderValue;
     }
 
-    public void setOrderValue(Double orderValue) {
-        this.orderValue = orderValue;
-    }
-
     public String getPaymentRequestId() {
         return paymentRequestId;
-    }
-
-    public void setPaymentRequestId(String paymentRequestId) {
-        this.paymentRequestId = paymentRequestId;
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Payment payment = (Payment) o;
-        return Objects.equals(id, payment.id)
-                && Objects.equals(card, payment.card)
-                && Objects.equals(orderValue, payment.orderValue)
-                && Objects.equals(paymentRequestId, payment.paymentRequestId);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(id, card, orderValue, paymentRequestId);
     }
 }
