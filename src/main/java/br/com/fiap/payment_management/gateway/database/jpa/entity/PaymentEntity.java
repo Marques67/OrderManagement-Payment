@@ -28,11 +28,14 @@ public class PaymentEntity {
     @Column(name = "payment_request_id")
     private String paymentRequestId;
 
+    @Column(name = "order_id")
+    private Long orderId;
+
     public PaymentEntity() {
     }
 
     public PaymentEntity(Long id, Double orderValue, String number, Integer cvv, String nameOnCard,
-                         String expirationDate, String paymentRequestId) {
+                         String expirationDate, String paymentRequestId, Long orderId) {
         this.id = id;
         this.orderValue = orderValue;
         this.number = number;
@@ -40,6 +43,7 @@ public class PaymentEntity {
         this.nameOnCard = nameOnCard;
         this.expirationDate = expirationDate;
         this.paymentRequestId = paymentRequestId;
+        this.orderId = orderId;
     }
 
     public PaymentEntity(Payment payment) {
@@ -52,6 +56,7 @@ public class PaymentEntity {
         this.nameOnCard = card.getNameOnCard();
         this.expirationDate = card.getExpirationDate();
         this.paymentRequestId = payment.getPaymentRequestId();
+        this.orderId = payment.getOrderId();
     }
 
     public Long getId() {
@@ -86,8 +91,12 @@ public class PaymentEntity {
         return paymentRequestId;
     }
 
+    public Long getOrderId() {
+        return orderId;
+    }
+
     public Payment toDomain() {
         Card card = new Card(number, cvv, nameOnCard, expirationDate);
-        return new Payment(id, card, orderValue, paymentRequestId);
+        return new Payment(id, card, orderValue, paymentRequestId, orderId);
     }
 }

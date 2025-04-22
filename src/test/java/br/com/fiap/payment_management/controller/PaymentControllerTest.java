@@ -48,10 +48,10 @@ public class PaymentControllerTest {
         Card card = new Card(1L, "1234-1234-1234-1234", 123,
                 "JOAO M SILVA", "05/28");
         Payment payment = new Payment(1L, card,
-                198.99, "7d7087ae-1f1a-40ab-9be7-44a0f82625ff");
+                198.99, "7d7087ae-1f1a-40ab-9be7-44a0f82625ff", 1L);
         PaymentDTO dto = new PaymentDTO(payment);
 
-        when(paymentUseCase.makePayment(any(), any())).thenReturn(payment);
+        when(paymentUseCase.makePayment(any(), any(), any())).thenReturn(payment);
         when(paymentJpaGateway.createPayment(any())).thenThrow(new IllegalArgumentException("Payment already exists"));
 
         assertThrows(IllegalArgumentException.class,
@@ -65,7 +65,7 @@ public class PaymentControllerTest {
         Card card = new Card(1L, "1234-1234-1234-1234", 123,
                 "JOAO M SILVA", "05/28");
         Payment payment = new Payment(1L, card,
-                198.99, "7d7087ae-1f1a-40ab-9be7-44a0f82625ff");
+                198.99, "7d7087ae-1f1a-40ab-9be7-44a0f82625ff", 1L);
         PaymentDTO dto = new PaymentDTO(payment);
 
         when(paymentJpaGateway.createPayment(any())).thenReturn(payment);
@@ -80,15 +80,15 @@ public class PaymentControllerTest {
         Card card = new Card(1L, "1234-1234-1234-1234", 123,
                 "JOAO M SILVA", "05/28");
         Payment payment = new Payment(1L, card,
-                198.99, "7d7087ae-1f1a-40ab-9be7-44a0f82625ff");
+                198.99, "7d7087ae-1f1a-40ab-9be7-44a0f82625ff", 1L);
         PaymentDTO dto = new PaymentDTO(payment);
 
         PaymentEntity paymentEntity = new PaymentEntity(1L, 198.99, "1234-1234-1234-1234", 123,
-                "JOAO M SILVA", "05/28", "7d7087ae-1f1a-40ab-9be7-44a0f82625ff");
+                "JOAO M SILVA", "05/28", "7d7087ae-1f1a-40ab-9be7-44a0f82625ff", 1L);
 
         when(paymentRepository.findById(any())).thenReturn(Optional.of(paymentEntity));
         when(paymentJpaGateway.findById(any())).thenReturn(new Payment(paymentEntity.getId(), card,
-                paymentEntity.getOrderValue(), paymentEntity.getPaymentRequestId()));
+                paymentEntity.getOrderValue(), paymentEntity.getPaymentRequestId(), paymentEntity.getOrderId()));
 
         PaymentDTO result = paymentController.findById(1L);
 

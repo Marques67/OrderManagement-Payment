@@ -29,6 +29,7 @@ public class PaymentJpaGatewayTest {
             "05/28");
     private final Double orderValue = 198.99;
     private final String paymentRequestId = "7d7087ae-1f1a-40ab-9be7-44a0f82625ff";
+    private final Long orderId = 1L;
 
     @BeforeEach
     void setUp() {
@@ -41,7 +42,7 @@ public class PaymentJpaGatewayTest {
 
     @Test
     public void shouldCreatePaymentWithSuccess() {
-        Payment payment = new Payment(this.card, this.orderValue, this.paymentRequestId);
+        Payment payment = new Payment(this.card, this.orderValue, this.paymentRequestId, this.orderId);
 
         PaymentEntity paymentEntity = new PaymentEntity(payment);
         paymentEntity.setId(1L);
@@ -60,7 +61,7 @@ public class PaymentJpaGatewayTest {
 
     @Test
     public void shouldThrowExceptionWhenIdIsNotNull() {
-        Payment payment = new Payment(1L, this.card, this.orderValue, this.paymentRequestId);
+        Payment payment = new Payment(1L, this.card, this.orderValue, this.paymentRequestId, this.orderId);
 
         when(paymentRepository.save(any())).thenReturn(new PaymentEntity(payment));
 
@@ -70,7 +71,7 @@ public class PaymentJpaGatewayTest {
 
     @Test
     public void shouldFindPaymentByIdWithSuccess() {
-        Payment payment = new Payment(this.card, this.orderValue, this.paymentRequestId);
+        Payment payment = new Payment(this.card, this.orderValue, this.paymentRequestId, this.orderId);
 
         PaymentEntity paymentEntity = new PaymentEntity(payment);
         paymentEntity.setId(1L);
@@ -86,8 +87,6 @@ public class PaymentJpaGatewayTest {
         assertEquals(paymentEntity.getCvv(), result.getCard().getCvv());
         assertEquals(paymentEntity.getExpirationDate(), result.getCard().getExpirationDate());
         assertEquals(paymentEntity.getNameOnCard(), result.getCard().getNameOnCard());
-
-
     }
 
     @Test

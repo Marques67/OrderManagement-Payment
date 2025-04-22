@@ -26,6 +26,7 @@ public class MakePaymentUseCaseTest {
             "05/28");
     private final Double orderValue = 198.99;
     private final String paymentRequestId = "7d7087ae-1f1a-40ab-9be7-44a0f82625ff";
+    private final Long orderId = 1L;
 
     @BeforeEach
     void setUp() {
@@ -40,7 +41,7 @@ public class MakePaymentUseCaseTest {
     void shouldMakePayment() {
         when(makePaymentProducer.makePayment(any(), any())).thenReturn(this.paymentRequestId);
 
-        var result = paymentUseCase.makePayment(this.card, this.orderValue);
+        var result = paymentUseCase.makePayment(this.card, this.orderValue, this.orderId);
 
         assertInstanceOf(Payment.class, result);
     }

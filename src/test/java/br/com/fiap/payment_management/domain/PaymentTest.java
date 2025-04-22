@@ -10,12 +10,13 @@ public class PaymentTest {
             "05/28");
     private final Double orderValue = 198.99;
     private final String paymentRequestId = "7d7087ae-1f1a-40ab-9be7-44a0f82625ff";
+    private final Long orderId = 1L;
 
     @Test
     void throwsExceptionWhenCardIsNull() {
         assertThrows(
                 IllegalArgumentException.class,
-                () -> new Payment(null, this.orderValue, this.paymentRequestId),
+                () -> new Payment(null, this.orderValue, this.paymentRequestId, this.orderId),
                 "Card is required"
         );
     }
@@ -24,7 +25,7 @@ public class PaymentTest {
     void throwsExceptionWhenPaymentIdIsNull() {
         assertThrows(
                 IllegalArgumentException.class,
-                () -> new Payment(null, this.card, this.orderValue, this.paymentRequestId),
+                () -> new Payment(null, this.card, this.orderValue, this.paymentRequestId, this.orderId),
                 "Id is required"
         );
     }
@@ -33,7 +34,7 @@ public class PaymentTest {
     void throwsExceptionWhenPaymentIDIsLessThanZero() {
         assertThrows(
                 IllegalArgumentException.class,
-                () -> new Payment(-1L, this.card, this.orderValue, this.paymentRequestId),
+                () -> new Payment(-1L, this.card, this.orderValue, this.paymentRequestId, this.orderId),
                 "Id is required"
         );
     }
@@ -53,6 +54,24 @@ public class PaymentTest {
                 IllegalArgumentException.class,
                 () -> new Payment(this.orderValue, null),
                 "Payment Request id is required"
+        );
+    }
+
+    @Test
+    void throwsExceptionWhenOrderIdIsNull() {
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> new Payment(1L, this.card, this.orderValue, this.paymentRequestId, null),
+                "Order id is required"
+        );
+    }
+
+    @Test
+    void throwsExceptionWhenOrderIdIsLessThanZero() {
+        assertThrows(
+                IllegalArgumentException.class,
+                () -> new Payment(1L, this.card, this.orderValue, this.paymentRequestId, -1L),
+                "Order id is required"
         );
     }
 }

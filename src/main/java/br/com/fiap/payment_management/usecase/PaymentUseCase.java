@@ -12,8 +12,8 @@ public class PaymentUseCase {
         this.makePaymentProducer = makePaymentProducer;
     }
 
-    public Payment makePayment(Card card, Double orderValue) {
+    public Payment makePayment(Card card, Double orderValue, Long orderId) {
         String paymentRequestId = this.makePaymentProducer.makePayment(card, orderValue);
-        return new Payment(card, orderValue, paymentRequestId);
+        return new Payment(card, orderValue, paymentRequestId, orderId);
     }
 }

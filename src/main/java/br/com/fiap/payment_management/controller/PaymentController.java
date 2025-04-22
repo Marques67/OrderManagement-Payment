@@ -26,7 +26,7 @@ public class PaymentController {
         CardDTO cardDTO = paymentDTO.card();
 
         Card card = new Card(cardDTO.number(), cardDTO.cvv(), cardDTO.nameOnCard(), cardDTO.expirationDate());
-        Payment payment = paymentUseCase.makePayment(card, paymentDTO.orderValue());
+        Payment payment = paymentUseCase.makePayment(card, paymentDTO.orderValue(), paymentDTO.orderId());
 
         return new PaymentDTO(paymentJpaGateway.createPayment(payment));
     }

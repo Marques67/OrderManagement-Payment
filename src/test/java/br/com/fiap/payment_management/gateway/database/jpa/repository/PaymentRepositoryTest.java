@@ -25,10 +25,11 @@ public class PaymentRepositoryTest {
             "05/28");
     private final Double orderValue = 198.99;
     private final String paymentRequestId = "7d7087ae-1f1a-40ab-9be7-44a0f82625ff";
+    private final Long orderId = 1L;
 
     @Test
     public void shouldSavePayment() {
-        Payment payment = new Payment(this.card, this.orderValue, this.paymentRequestId);
+        Payment payment = new Payment(this.card, this.orderValue, this.paymentRequestId, this.orderId);
         PaymentEntity savedPayment = paymentRepository.save(new PaymentEntity(payment));
 
         assertNotNull(savedPayment.getId());
@@ -38,6 +39,7 @@ public class PaymentRepositoryTest {
         assertEquals(this.card.getExpirationDate(), savedPayment.getExpirationDate());
         assertEquals(this.orderValue, savedPayment.getOrderValue());
         assertEquals(this.paymentRequestId, savedPayment.getPaymentRequestId());
+        assertEquals(this.orderId, savedPayment.getOrderId());
         assertEquals(this.card.getNumber(), savedPayment.getNumber());
     }
 }

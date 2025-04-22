@@ -8,27 +8,32 @@ public class Payment {
     private Card card;
     private Double orderValue;
     private String paymentRequestId;
+    private Long orderId;
 
-    public Payment(Long id, Card card, Double orderValue, String paymentRequestId) {
+    public Payment(Long id, Card card, Double orderValue, String paymentRequestId, Long orderId) {
         validatePaymentId(id);
         validatePaymentCard(card);
         validatePaymentValue(orderValue);
         validatePaymentRequestId(paymentRequestId);
+        validateOrderId(orderId);
 
         this.id = id;
         this.card = card;
         this.orderValue = orderValue;
         this.paymentRequestId = paymentRequestId;
+        this.orderId = orderId;
     }
 
-    public Payment(Card card, Double orderValue, String paymentRequestId) {
+    public Payment(Card card, Double orderValue, String paymentRequestId, Long orderId) {
         validatePaymentCard(card);
         validatePaymentValue(orderValue);
         validatePaymentRequestId(paymentRequestId);
+        validateOrderId(orderId);
 
         this.card = card;
         this.orderValue = orderValue;
         this.paymentRequestId = paymentRequestId;
+        this.orderId = orderId;
     }
 
     public Payment(Double orderValue, String paymentRequestId) {
@@ -63,6 +68,12 @@ public class Payment {
         }
     }
 
+    private void validateOrderId(Long orderId) {
+        if (orderId == null || orderId <= 0) {
+            throw new IllegalArgumentException("Order id is required");
+        }
+    }
+
     public Long getId() {
         return id;
     }
@@ -77,5 +88,9 @@ public class Payment {
 
     public String getPaymentRequestId() {
         return paymentRequestId;
+    }
+
+    public Long getOrderId() {
+        return orderId;
     }
 }
