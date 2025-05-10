@@ -10,3 +10,15 @@ services:
       - POSTGRES_DB=payment-db
     ports:
       - "5433:5432"
+
+  payment-app:
+    image: marques67/payment
+    container_name: payment
+    environment:
+      - DB_URL=jdbc:postgresql://payment:5432/payment-db
+      - DB_USER=user
+      - DB_PASSWORD=password
+    depends_on:
+      - payment
+    ports:
+      - "8080:8080"
